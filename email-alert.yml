@@ -9,17 +9,17 @@ route:
   repeat_interval: 2m
   receiver: 'gmail-notifications'
 
-receivers:
-- name: 'gmail-notifications'
-  email_configs:
-  - to: 'example@gmail.com'
-    send_resolved: true
-    from: '${EMAIL}'
-    smarthost: smtp.gmail.com:587
-    auth_username: '${EMAIL}'
-    auth_identity: '${EMAIL}'
-    auth_password: '${GMAIL_APP_PASSWORD}'
-    headers:
-      subject: 'Alert: {{ .CommonAnnotations.summary }}'
-      to: 'example@gmail.com'
-    html: '<h2>{{ .CommonAnnotations.title }}</h2><p>{{ .CommonAnnotations.description }}</p><p>Severity: {{ .Labels.severity }}</p>'
+ receivers:
+    - name: 'gmail-notifications'
+      email_configs:
+      - to: example@gmail.com 
+        from: example@gmail.com # Update your from mail id here
+        smarthost: smtp.gmail.com:587
+        auth_username: example@gmail.com # Update your from mail id here
+        auth_identity: example@gmail.com # Update your from mail id here
+        auth_password: password # Update your app-password here
+        send_resolved: true
+        headers:
+          subject: " Prometheus -  Alert  "
+        text: "{{ range .Alerts }} Hi, \n{{ .Annotations.summary }}  \n {{ .Annotations.description }} {{end}} "
+
